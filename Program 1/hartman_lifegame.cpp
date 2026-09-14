@@ -7,10 +7,14 @@ using namespace std;
 
 // Function prototypes
 void openFiles(ifstream& infile, ofstream& outfile);
-// prompts which input/output files the program uses, doesn't close them.
+/* Purpose: prompts which input/output files the program uses, doesn't close them.
+   Recieves: infile, input file at direct address; outfile, output file at direct address.
+   Returns: nothing. */
 
 void closeFiles(ifstream& infile, ofstream& outfile);
-// closes input/output files. it closes files. the snoot drooped.
+/* Purpose: closes input/output files. it closes files. the snoot drooped.
+   Recieves: 
+   Returns:  */
 
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
 // debug version of openFiles, makes testing quicker by removing the input prompts.
@@ -70,6 +74,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
 {
     infile.close();
     outfile.close();
+    cout << "files closed\n";
 }
 
 vector<unsigned short> fillArray(ifstream& infile)
