@@ -13,19 +13,15 @@ void openFiles(ifstream& infile, ofstream& outfile);
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
 // debug version of openFiles, makes testing quicker by removing the input prompts.
 
+vector<unsigned short> fillArray(ifstream& infile);
+// fills the array (or vector in this case) with the data values from the selected infile from openFiles
+
 int main() {
     ifstream infile; // input file
     ofstream outfile; // output file
     //openFiles(infile, outfile); // open input/output files
     debugOpenFiles(infile, outfile); // debug 'openFiles' option
-    vector<unsigned short> numbers; // vector (dynamic array)
-    
-    // while loop to insert the numbers from the data file into a vector (dynamic array)
-    unsigned short number;
-    while(infile >> number) {
-        numbers.push_back(number);
-        cout << number << " ";
-    } cout << endl;
+    vector<unsigned short> numbers = fillArray(infile); // vector (dynamic array)
     
     // do-while loop iterate, 1D game of life
     bool go = false; // controls do-while iteration
@@ -60,3 +56,18 @@ void openFiles (ifstream& infile, ofstream& outfile)
     outfile.open(outFileName); // open output file
 }
 
+vector<unsigned short> fillArray(ifstream& infile)
+{
+    vector<unsigned short> data; // dynamic array to be passed
+    unsigned short num; // temporary value
+
+    cout << "array: ";
+
+    // while loop to insert the numbers from the data file into a vector (dynamic array)
+    while(infile >> num) {
+        data.push_back(num); // add next data value to the array
+        cout << num << " "; // debugging, remove later
+    }
+    cout << endl; // debugging, remove later
+    return data;
+}
