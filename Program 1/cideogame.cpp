@@ -10,6 +10,9 @@ using namespace std;
 void openFiles(ifstream& infile, ofstream& outfile);
 // prompts which input/output files the program uses, doesn't close them.
 
+void closeFiles(ifstream& infile, ofstream& outfile);
+// closes files. the snoot drooped.
+
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
 // debug version of openFiles, makes testing quicker by removing the input prompts.
 
@@ -30,7 +33,8 @@ int main() {
         // print out the data on each iteration, clean format
         // prompt yes/no to continue simulation
     } while(go == true);
-    
+    closeFiles(infile, outfile);
+
     // program end
     cout << "program ended\n";
     return 0;
@@ -56,11 +60,17 @@ void openFiles (ifstream& infile, ofstream& outfile)
     outfile.open(outFileName); // open output file
 }
 
+void closeFiles (ifstream& infile, ofstream& outfile)
+{
+    infile.close();
+    outfile.close();
+}
+
 vector<unsigned short> fillArray(ifstream& infile)
 {
-    vector<unsigned short> data; // dynamic array to be passed
+    vector<unsigned short> data; // dynamic array to be returned
     unsigned short num; // temporary value
-
+    
     cout << "array: ";
 
     // while loop to insert the numbers from the data file into a vector (dynamic array)
