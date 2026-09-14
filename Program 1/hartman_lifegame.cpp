@@ -1,7 +1,6 @@
 // libraries, input/output file reader/writer, console formating
 #include <iostream> // console input/output
 #include <iomanip> // text formatting
-#include <stdexcept> // error handling
 #include <fstream> // open input/output files
 #include <vector> // dynamic array option
 using namespace std;
@@ -11,7 +10,7 @@ void openFiles(ifstream& infile, ofstream& outfile);
 // prompts which input/output files the program uses, doesn't close them.
 
 void closeFiles(ifstream& infile, ofstream& outfile);
-// closes files. the snoot drooped.
+// closes input/output files. it closes files. the snoot drooped.
 
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
 // debug version of openFiles, makes testing quicker by removing the input prompts.
@@ -30,7 +29,14 @@ int main() {
     bool go = false; // controls do-while iteration
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        // print out the data on each iteration, clean format
+        // step 1: shift x0 to the right
+        // step 2a: set x'j to xj & x'j-1, where 1 <= j <= n-1 and j is odd.
+        // step 2b: or set xj ^ xj+1, where 2 <= j <= n-2 and j is even.
+        // step 3: set the i'th bit of x'n-1 to 0, where is is the generation number (or the iteration number) of the loop execution
+        // step 4: find the sum of the generation
+        
+        // print out the data on each iteration in console and output to outfile, clean format
+        
         // prompt yes/no to continue simulation
     } while(go == true);
     closeFiles(infile, outfile);
@@ -43,7 +49,7 @@ int main() {
 void debugOpenFiles (ifstream& infile, ofstream& outfile)
 {
     infile.open("bits1.dat");
-    outfile.open("output.txt");
+    outfile.open("hartman_bits2.out");
 }
 
 void openFiles (ifstream& infile, ofstream& outfile)
