@@ -1,3 +1,8 @@
+// Reed Hartman
+// CMPS 2433
+// Catherine Stringfellow
+// Program 1 Assignment
+
 // libraries, input/output file reader/writer, console formating
 #include <iostream> // console input/output
 #include <iomanip> // text formatting
@@ -47,6 +52,9 @@ int main() {
     cout << "Reed Hartman" << endl;
     cout << "Program #1" << endl << endl;
 
+    outfile << "Reed Hartman" << endl;
+    outfile << "Program #1" << endl << endl;
+
     // do-while loop iterate, 1D game of life
     bool go = true; // controls do-while iteration
     int i = 0; // generation number
@@ -55,14 +63,17 @@ int main() {
         if (i == 0) // first generation runs this code only
         {
             cout << "Generation 0: ";
+            outfile << "Generation 0: ";
             for (int k = 0; k < numbers.size(); k++) // for loop to print numbers
             {
                 cout << setw(5) << right << numbers[k];
+                outfile << setw(5) << right << numbers[k];
             }
         }
         else // all subsequent generations run this code
         {
             cout << "Generation " << i << ": ";
+            outfile << "Generation " << i << ": ";
             for (int j = 0; j < numbers.size(); j++) // for loop to loop through array
             {
                 unsigned short numi = numbers[j]; // temporary number value, "number at index"
@@ -86,11 +97,13 @@ int main() {
                     }
                 }
                 cout << setw(5) << right << numbers[j]; // print numbers
+                outfile << setw(5) << right << numbers[j];
             }
         }
 
         // take sum of the current generation
         cout << "    sum: " << findSumOfArray(numbers);
+        outfile << "    sum: " << findSumOfArray(numbers);
 
         // prompt to continue simulation
         cout << "    "; // space
@@ -98,16 +111,19 @@ int main() {
         cin >> answer;
         if (answer == "y"){go = true;}
         else              {go = false;}
+        outfile << endl;
 
         // increment generation number
         i++;
 
     } while(go == true);
     cout << endl << "Generations complete!" << endl;
+    outfile << endl << "Generations complete!" << endl;
     closeFiles(infile, outfile);
 
     // program end
     cout << "program ended\n";
+    outfile << "program ended\n";
     return 0;
 }
 
@@ -125,6 +141,10 @@ void openFiles (ifstream& infile, ofstream& outfile)
     cout << "Enter the output file name: ";
     cin >> outFileName;
     outfile.open(outFileName); // open output file
+
+    outfile << "input file: " << inFileName << endl;
+    outfile << "output file: " << outFileName << endl;
+    outfile << endl;
 }
 
 void closeFiles (ifstream& infile, ofstream& outfile)
@@ -132,6 +152,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
     infile.close();
     outfile.close();
     cout << "files closed\n";
+    outfile << "files closed\n";
 }
 
 vector<unsigned short> fillArray(ifstream& infile)

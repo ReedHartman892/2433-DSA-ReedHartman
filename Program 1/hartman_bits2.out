@@ -1,0 +1,18 @@
+input file: bits2.dat
+output file: hartman_bits2.out
+
+Reed Hartman
+Program #1
+
+Generation 0:    86  200   44    7    1    0  328   67    sum: 733
+Generation 1:    43    8   43    3    1    0  267   65    sum: 430
+Generation 2:    21    0   40    0    1    0  330   65    sum: 457
+Generation 3:    10    0   40    0    1    0  267   65    sum: 383
+Generation 4:     5    0   40    0    1    0  330   65    sum: 441
+Generation 5:     2    0   40    0    1    0  267   65    sum: 375
+Generation 6:     1    0   40    0    1    0  330    1    sum: 373
+Generation 7:     0    0   40    0    1    0  331    1    sum: 373
+Generation 8:     0    0   40    0    1    0  330    1    sum: 372
+Generation 9:     0    0   40    0    1    0  331    1    sum: 373
+
+Generations complete!
