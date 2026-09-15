@@ -24,7 +24,7 @@ vector<unsigned short> fillArray(ifstream& infile);
 
 // Program Definitions
 #define ODD 1 // definition of odd
-#define EVEN 2 // definition of even
+#define EVEN 0 // definition of even
 
 int main() {
     ifstream infile; // input file
@@ -37,13 +37,30 @@ int main() {
     bool go = false; // controls do-while iteration
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        for // loop
-        // step 1: shift x'0 to the right
+        for (int i = 1; i < numbers.size()-1; i++) // ignore first and second bits
+        {
+            if (i == 0) // first digit
+            {
+                numbers[0] = numbers[0] >> 1;
+            }
+            else if (i & ODD) // even digit
+            {
+                numbers[i] = numbers[i] & numbers[i-1];
+            }
+            else if ((i & EVEN) && (i < numbers.size()-1)) // odd digit
+            {
+                numbers[i] = numbers[i] & numbers[i-1];
+            }
+            else // mask last digit: change the i-(generation number)'th bit of last element in the array
+            {
+
+            }
+        }
+        // step 1: shift x'0 to the right 1
         // step 2a: set x'j to xj & x'j-1, where 1 <= j <= n-1 and j is odd.
         // step 2b: or set x'j ^ x'j+1, where 2 <= j <= n-2 and j is even.
-        // step 3: set the i'th bit of x'n-1 to 0, where is is the generation number (or the iteration number) of the loop execution
+        // step 3: set the i'th bit of x'n-1 to 0, where i is the generation number (or the iteration number) of the loop execution
         // step 4: find the sum of the generation
-        
         // print out the data on each iteration in console and output to outfile, clean format
         
         // prompt yes/no to continue simulation
