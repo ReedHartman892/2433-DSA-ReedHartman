@@ -40,32 +40,36 @@ int main() {
     
     // do-while loop iterate, 1D game of life
     bool go = true; // controls do-while iteration
-    int gen = 0; // generation number
+    int i = 0; // generation number
     do {
-        for (int j = 0; j < numbers.size(); j++) // for loop to loop through array
+        for (int j = 1; j < numbers.size(); j++) // for loop to loop through array
         {
-            if (j == 0) // 1st element
+            short numi = numbers[j];
+            if (j == 1) // 1st element
             {
-                cout << "1st element: " << numbers[j] << endl;
+                numbers[j] = numi >> 1;
             }
             else if (j == numbers.size()-1) // last element
             {
-                cout << "last element: " << numbers[j] << endl;
+                // toggles the i'th bit
+                numbers[j] = numi & ~(1 << i);
             }
             else // even/odd elements
             {
                 if (j & ODD)
                 {
-                    cout << "odd element: " << numbers[j] << endl;
+                    
                 }
                 else // even numbers
                 {
-                    cout << "even element: " << numbers[j] << endl;
+                    
                 }
             }
+            cout << numbers[j] << " "; // print numbers
         }
-        gen++; // increment generation
-        if (gen >= 1) {go = false;} // failsafe
+        cout << endl;
+        i++; // increment generation
+        if (i >= 8) {go = false;} // failsafe
 
     } while(go == true);
     closeFiles(infile, outfile);
