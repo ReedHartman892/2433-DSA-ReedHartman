@@ -22,6 +22,12 @@ void debugOpenFiles(ifstream& infile, ofstream& outfile);
 vector<unsigned short> fillArray(ifstream& infile);
 // fills the array (or vector in this case) with the data values from the selected infile from openFiles
 
+int twoPower(int exp);
+// finds two to a power of exp, used in the masking portion of the program.
+
+int findSumOfArray(vector<unsigned short> array);
+// finds the sum of an array
+
 // Program Definitions
 #define ODD 1 // definition of odd
 #define EVEN 0 // definition of even
@@ -34,38 +40,40 @@ int main() {
     vector<unsigned short> numbers = fillArray(infile); // vector (dynamic array)
     
     // do-while loop iterate, 1D game of life
-    bool go = false; // controls do-while iteration
+    bool go = true; // controls do-while iteration
+    int iter = 0;
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        int mask = 0;
+        cout << "Generation " << iter << ": ";
         for (int i = 0; i < numbers.size()-1; i++) // ignore first and second bits
         {
             if (i == 0) // shift first digit right 1
             {
                 numbers[0] = numbers[0] >> 1;
             }
-            else if (i & ODD) // bitwise-and odd digit
+            else if (i & ODD) // bitwise-and odd digit with next digit
             {
                 numbers[i] = numbers[i] & numbers[i-1];
             }
-            else if ((i & EVEN) ^ (i < numbers.size()-1)) // bitwise-xor even digit
+            else if ((i & EVEN) ^ (i < numbers.size()-1)) // bitwise-xor even digit with next digit
             {
                 numbers[i] = numbers[i] & numbers[i-1];
             }
-            else // mask last digit: change the i-(generation number)'th bit of last element in the array
+            else // mask last digit: change the i-(generation number)'th bit of last element in the array to zero
             {
-                numbers[i] = numbers[i] ^ /*2 to the power of mask*/;
+                numbers[i] = numbers[i] ^ twoPower(iter);
             }
             cout << numbers[i] << " ";
         }
-        // step 1: shift x'0 to the right 1
-        // step 2a: set x'j to xj & x'j-1, where 1 <= j <= n-1 and j is odd.
-        // step 2b: or set x'j ^ x'j+1, where 2 <= j <= n-2 and j is even.
-        // step 3: set the i'th bit of x'n-1 to 0, where i is the generation number (or the iteration number) of the loop execution
         // step 4: find the sum of the generation
-        // print out the data on each iteration in console and output to outfile, clean format
+        cout << " Sum: " << findSumOfArray(numbers) << "\n";
+        iter++; // increment iteration
         
         // prompt yes/no to continue simulation
+        if (iter == 8) {
+            go == false;
+        }
+
     } while(go == true);
     closeFiles(infile, outfile);
 
@@ -115,4 +123,18 @@ vector<unsigned short> fillArray(ifstream& infile)
     }
     cout << endl; // debugging, remove later
     return data;
+}
+
+int twoPower(int exp)
+{
+    int x = 1;
+    for (int i = 0; i < exp; i++){
+        x = x * 2;
+    }
+    return x;
+}
+
+int findSumOfArray(vector<unsigned short> array)
+{
+    return 0;
 }
