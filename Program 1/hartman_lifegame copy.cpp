@@ -3,31 +3,36 @@
 #include <iomanip> // text formatting
 #include <fstream> // open input/output files
 #include <vector> // dynamic array option
+#include <string> // strings, only used for the simulation prompt.
 using namespace std;
 
 // Function prototypes
 void openFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: prompts which input/output files the program uses, doesn't close them.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
-   Returns: nothing. */
+   Returns: no return value
+*/
  
 void closeFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: closes input/output files. it closes files. the snoot drooped.
-   Recieves: 
-   Returns:  */
+   Recieves: infile, input file at direct address; outfile, output file at direct address.
+   Returns: no return value
+*/
 
 vector<unsigned short> fillArray(ifstream& infile);
-// fills the array (or vector in this case) with the data values from the selected infile from openFiles
+/* Purpose: fills the array (or vector in this case) with the data values from the selected infile from openFiles
+   Recieves: infile, input file at direct address
+   Returns: filled vector of unsigned short values from the passed file.
+*/
 
 int findSumOfArray(vector<unsigned short> array);
-// finds the sum of an array
-
-void generationStatement(vector<unsigned short> array, int genNumber);
-// print statement
+/* Purpose: finds the sum all values within an array
+   Recieves: vector<unsigned short> array (copied over from numbers in int main())
+   Returns: integer sum of the passed array
+*/
 
 // Program Definitions
 #define ODD 1 // definition of odd
-#define EVEN 0 // definition of even
 #define MASK 1 // definition of mask
 
 int main() {
@@ -50,11 +55,10 @@ int main() {
         if (i == 0) // first generation runs this code only
         {
             cout << "Generation 0: ";
-            for (int k = 0; k < numbers.size(); k++) // vector for loop to print numbers
+            for (int k = 0; k < numbers.size(); k++) // for loop to print numbers
             {
-                cout << setw(4) << right << numbers[k];
+                cout << setw(5) << right << numbers[k];
             }
-            cout << endl;
         }
         else // all subsequent generations run this code
         {
@@ -68,8 +72,7 @@ int main() {
                 }
                 else if (j == numbers.size()-1) // last element
                 {
-                    // toggles the i'th bit
-                    numbers[j] = numi & ~(MASK << i);
+                    numbers[j] = numi & ~(MASK << i); // toggles the i'th bit
                 }
                 else // even/odd elements
                 {
@@ -82,19 +85,33 @@ int main() {
                         numbers[j] = numi ^ numbers[j+1];
                     }
                 }
-                cout << setw(4) << right << numbers[j]; // print numbers
+                cout << setw(5) << right << numbers[j]; // print numbers
             }
-            cout << endl;
         }
-        i++; // increment generation number
-        if (i >= 9) {go = false;} // failsafe
+
+        // take sum of the current generation
+        cout << "    sum: " << findSumOfArray(numbers);
+
+        // prompt to continue simulation
+        cout << "    "; // space
+        string answer;
+        cin >> answer;
+        if (answer == "y"){go = true;}
+        else              {go = false;}
+
+        // increment generation number
+        i++;
+
     } while(go == true);
+    cout << endl << "Generations complete!" << endl;
     closeFiles(infile, outfile);
 
     // program end
     cout << "program ended\n";
     return 0;
 }
+
+// my functions!
 
 void openFiles (ifstream& infile, ofstream& outfile)
 {
@@ -135,5 +152,9 @@ vector<unsigned short> fillArray(ifstream& infile)
 
 int findSumOfArray(vector<unsigned short> array)
 {
-    return 0;
+    unsigned int sum = 0; // temporary value to store additive sum
+    for (int x = 0; x < array.size(); x++) {
+        sum += array[x]; // add each value at each index to sum
+    }
+    return sum;
 }
