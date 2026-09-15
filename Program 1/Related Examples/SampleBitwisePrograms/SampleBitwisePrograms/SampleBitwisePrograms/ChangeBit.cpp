@@ -14,7 +14,7 @@ int main()
 	value = value & ~mask | ((bitValue << pos) & mask);
 
 	cout << value << endl;      //111110 == 62 base 10
-
+	
 	system("pause");
 	return 0;
 }

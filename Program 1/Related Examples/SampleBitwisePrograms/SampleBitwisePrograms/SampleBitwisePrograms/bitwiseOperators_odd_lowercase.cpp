@@ -12,7 +12,7 @@ using namespace std;
 int main(){
   int num = 0;
   char letter = 'A';
-
+  
   //Enter 4 integers to determine if they are odd or even
   for (int x = 1; x <= 4; x++){
     cout << "Enter an integer.\n";

@@ -10,7 +10,7 @@ void openFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: prompts which input/output files the program uses, doesn't close them.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
    Returns: nothing. */
-
+ 
 void closeFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: closes input/output files. it closes files. the snoot drooped.
    Recieves: 
@@ -21,6 +21,10 @@ void debugOpenFiles(ifstream& infile, ofstream& outfile);
 
 vector<unsigned short> fillArray(ifstream& infile);
 // fills the array (or vector in this case) with the data values from the selected infile from openFiles
+
+// Program Definitions
+#define ODD 1 // definition of odd
+#define EVEN 2 // definition of even
 
 int main() {
     ifstream infile; // input file
@@ -33,9 +37,10 @@ int main() {
     bool go = false; // controls do-while iteration
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        // step 1: shift x0 to the right
+        for // loop
+        // step 1: shift x'0 to the right
         // step 2a: set x'j to xj & x'j-1, where 1 <= j <= n-1 and j is odd.
-        // step 2b: or set xj ^ xj+1, where 2 <= j <= n-2 and j is even.
+        // step 2b: or set x'j ^ x'j+1, where 2 <= j <= n-2 and j is even.
         // step 3: set the i'th bit of x'n-1 to 0, where is is the generation number (or the iteration number) of the loop execution
         // step 4: find the sum of the generation
         
