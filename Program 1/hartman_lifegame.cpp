@@ -37,24 +37,26 @@ int main() {
     bool go = false; // controls do-while iteration
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        for (int i = 1; i < numbers.size()-1; i++) // ignore first and second bits
+        int mask = 0;
+        for (int i = 0; i < numbers.size()-1; i++) // ignore first and second bits
         {
-            if (i == 0) // first digit
+            if (i == 0) // shift first digit right 1
             {
                 numbers[0] = numbers[0] >> 1;
             }
-            else if (i & ODD) // even digit
+            else if (i & ODD) // bitwise-and odd digit
             {
                 numbers[i] = numbers[i] & numbers[i-1];
             }
-            else if ((i & EVEN) && (i < numbers.size()-1)) // odd digit
+            else if ((i & EVEN) ^ (i < numbers.size()-1)) // bitwise-xor even digit
             {
                 numbers[i] = numbers[i] & numbers[i-1];
             }
             else // mask last digit: change the i-(generation number)'th bit of last element in the array
             {
-
+                numbers[i] = numbers[i] ^ /*2 to the power of mask*/;
             }
+            cout << numbers[i] << " ";
         }
         // step 1: shift x'0 to the right 1
         // step 2a: set x'j to xj & x'j-1, where 1 <= j <= n-1 and j is odd.

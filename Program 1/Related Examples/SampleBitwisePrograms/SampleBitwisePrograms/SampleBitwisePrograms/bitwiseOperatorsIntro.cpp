@@ -50,7 +50,7 @@ int main(){
   cout << "Toggle bit 4 (if rightmost bit is bit 0)\n";
   result = result ^ 16;
   cout << result << endl;
-
+  
   system("pause");
   return 0;
 }
