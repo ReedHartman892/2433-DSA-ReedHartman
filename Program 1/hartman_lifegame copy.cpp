@@ -30,7 +30,6 @@ int findSumOfArray(vector<unsigned short> array);
 
 // Program Definitions
 #define ODD 1 // definition of odd
-#define EVEN 2 // definition of even
 
 int main() {
     ifstream infile; // input file
@@ -41,38 +40,32 @@ int main() {
     
     // do-while loop iterate, 1D game of life
     bool go = true; // controls do-while iteration
-    int iter = 0;
+    int gen = 0; // generation number
     do {
-        // bitwise operations to update state of each cell in the array, see rubric instructions for details
-        cout << "Generation " << iter << ": ";
-        for (int i = 1; i < numbers.size(); i++) // ignore first and second bits
+        for (int j = 0; j < numbers.size(); j++) // for loop to loop through array
         {
-            if (i == 1) // shift first digit right 1
+            if (j == 0) // 1st element
             {
-                numbers[i] = numbers[i] >> 1;
+                cout << "1st element: " << numbers[j] << endl;
             }
-            else if ((i & ODD) && !(i < numbers.size()-1)) // bitwise-and odd digit with next digit
+            else if (j == numbers.size()-1) // last element
             {
-                numbers[i] = numbers[i] & numbers[i-1];
+                cout << "last element: " << numbers[j] << endl;
             }
-            else if ((i & EVEN) && !(i < numbers.size()-1)) // bitwise-xor even digit with next digit
+            else // even/odd elements
             {
-                numbers[i] = numbers[i] ^ numbers[i+1];
+                if (j & ODD)
+                {
+                    cout << "odd element: " << numbers[j] << endl;
+                }
+                else // even numbers
+                {
+                    cout << "even element: " << numbers[j] << endl;
+                }
             }
-            else // mask last digit: change the i-(generation number)'th bit of last element in the array to zero
-            {
-                numbers[i] = numbers[i] ^ twoPower(iter);
-            }
-            cout << numbers[i] << " ";
         }
-        // step 4: find the sum of the generation
-        cout << " Sum: " << findSumOfArray(numbers) << "\n";
-        iter++; // increment iteration
-        
-        // prompt yes/no to continue simulation
-        if (iter >= 9) {
-            go = false;
-        }
+        gen++; // increment generation
+        if (gen >= 1) {go = false;} // failsafe
 
     } while(go == true);
     closeFiles(infile, outfile);
