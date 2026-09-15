@@ -45,7 +45,7 @@ int main() {
     do {
         // bitwise operations to update state of each cell in the array, see rubric instructions for details
         cout << "Generation " << iter << ": ";
-        for (int i = 0; i < numbers.size()-1; i++) // ignore first and second bits
+        for (int i = 0; i < numbers.size(); i++) // ignore first and second bits
         {
             if (i == 0) // shift first digit right 1
             {
@@ -53,9 +53,7 @@ int main() {
             }
             else if (i & ODD) // bitwise-and odd digit with next digit
             {
-                numbers[i] = numbers[i] & numbers[i-1];
-            }
-            else if ((i & EVEN) ^ (i < numbers.size()-1)) // bitwise-xor even digit with next digit
+                numbers[i] = numbers[i] & numbers[i-1]; // bitwise-xor even digit with next digit
             {
                 numbers[i] = numbers[i] & numbers[i-1];
             }
@@ -66,12 +64,14 @@ int main() {
             cout << numbers[i] << " ";
         }
         // step 4: find the sum of the generation
+            }
+            else if ((i & EVEN) ^ (i < numbers.size()-1))
         cout << " Sum: " << findSumOfArray(numbers) << "\n";
         iter++; // increment iteration
         
         // prompt yes/no to continue simulation
-        if (iter == 8) {
-            go == false;
+        if (iter >= 8) {
+            go = false;
         }
 
     } while(go == true);
