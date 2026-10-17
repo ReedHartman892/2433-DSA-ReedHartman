@@ -12,13 +12,14 @@ using namespace std;
 
 // [Function prototypes]
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
+// debug option for file opening, opens pre-selected files for quick and easy debugging.
 
 void openFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: prompts which input/output files the program uses, doesn't close them.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
    Returns: no return value
 */
- 
+
 void closeFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: closes input/output files. it closes files. the snoot drooped.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
@@ -44,9 +45,13 @@ long padovanSum(int n);
    Returns: the integer sum of all padovan numbers leading up the n'th number in the padovan sequence.
 */
 
-/* Known problems
-   1. calculation time gets exponentially longer the higher the value of n is.
-   I don't know how to fix this because it's a big-boy programmer problem.
+/* A known problem
+   calculation time for the sum takes exponentially longer the higher the value of n is...
+   times two because outing to outfile means all calculations run twice.
+   I don't know how to improve this, because it's a big-boy programmer problem.
+   Internet reccomended it exists within the explicit formula for the padovan sum, which can hypothetically calculate
+   the sum of the padovan sequence with a single computation instead of calculating it iteratively.
+   But further sleuthing provided a very scary and highly-precise decimal calculation that I don't want to touch with a 50-foot pole.
 */
 
 #define BASE 1; // base value of the padovan sequence
@@ -56,9 +61,12 @@ int main()
     // input/output file control
     ifstream infile;
     ofstream outfile;
-    debugOpenFiles(infile, outfile);
+    openFiles(infile, outfile);
     
     // console/outfile stuff
+    outfile << "Reed Hartman" << "\n";
+    outfile << "Program #2" << "\n";
+
     cout << setw(8) << left << "VALUE";
     cout << setw(15) << left << "RECURSIVE";
     cout << setw(15) << left << "ITERATIVE";
@@ -100,7 +108,7 @@ int main()
         outfile << setw(8) << left << num;
         outfile << setw(15) << left << padovanSequence(num);
         outfile << setw(15) << left << iterPadovanSequence(num);
-        outfile << "sum: " << padovanSum(num);
+        outfile << padovanSum(num);
         outfile << endl;
         
     }
@@ -108,7 +116,7 @@ int main()
     return 0;
 }
 
-// we at the function
+// you are now at: THE FUNCTION
 /* list of functions in this file:
    1. debugOpenFiles
    2. openFiles
