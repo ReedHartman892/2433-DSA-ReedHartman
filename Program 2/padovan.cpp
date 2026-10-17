@@ -57,10 +57,21 @@ int main()
     while (!infile.eof())
     {
         string line; // note that line is a string since getline() doesn't return integers.
+        int num;
         getline(infile, line); // reads current line of the input file.
-        int num = stoi(line); // convert string from getline() to integer, personal note: stoi means "string to integer"
-        // note: I thought about overloading getline to return integers instead of strings, but this was the easiest solution.
-        // note: maybe I will put this into a function add an exception case if the stoi cannot convert to an integer, to make it a "proper function".
+        // note: I thought about overloading getline to return integers instead of strings, however this was the easiest solution.
+
+        try // code to check if line can be converted (like if theres a letter somehow)
+        {
+            int num = stoi(line); // convert string returned from getline() to integer
+            // self-note: stoi means "string to integer"
+        }
+        catch (const invalid_argument& e)
+        {
+            cerr << "Invalid argument: " << e.what() << "\n";
+            abort();
+        }
+
         cout << num << " " << padovanSequence(num) << " " << iterPadovanSequence(num) << endl; // basically the answer right there, but still needs formatting
     }
     closeFiles(infile, outfile);    
@@ -113,7 +124,9 @@ void closeFiles (ifstream& infile, ofstream& outfile)
 int padovanSequence(int n)
 {
     if (n <= 2)
+    {
         return BASE; // value of P(0), P(1), & P(3)
+    }
     return padovanSequence(n - 2) + padovanSequence(n - 3); // recursive computation
     // P(n) = P(n-2) + P(n-3)
 }
