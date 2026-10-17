@@ -1,0 +1,14 @@
+input file: data2.txt
+output file: output2.txt
+
+Reed Hartman
+Program #2
+VALUE   RECURSIVE      ITERATIVE      SUM
+1       1              1              2
+5       3              3              10
+7       5              5              19
+67      109870576      109870576      448227519
+31      4410           4410           17989
+12      21             21             84
+11      16             16             63
+26      1081           1081           4408
