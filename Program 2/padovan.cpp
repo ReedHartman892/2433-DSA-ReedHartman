@@ -58,17 +58,17 @@ int main()
     {
         string line; // note that line is a string since getline() doesn't return integers.
         getline(infile, line); // reads current line of the input file.
-        int num = stoi(line); // convert string from getline() to integer
-        // note: I thought about overloading getline, but this was the easiest solution.
-        // note: maybe I will put this into a function add an exception case if the stoi cannot convert to an integer.
-        cout << num << " " << padovanSequence(num) << " " << iterPadovanSequence(num) << endl;
+        int num = stoi(line); // convert string from getline() to integer, personal note: stoi means "string to integer"
+        // note: I thought about overloading getline to return integers instead of strings, but this was the easiest solution.
+        // note: maybe I will put this into a function add an exception case if the stoi cannot convert to an integer, to make it a "proper function".
+        cout << num << " " << padovanSequence(num) << " " << iterPadovanSequence(num) << endl; // basically the answer right there, but still needs formatting
     }
-    closeFiles(infile, outfile);
+    closeFiles(infile, outfile);    
 
     return 0;
 }
 
-// my functions!
+// we at the function
 /* list of functions in this file:
    1. debugOpenFiles
    2. openFiles
