@@ -82,7 +82,6 @@ int main()
     {
         string line; // note that line is a string since getline() doesn't return integers.
         int num;
-        long sum = 0;
         getline(infile, line); // reads current line of the input file.
         // note: I thought about overloading getline to return integers instead of strings, however this was the easiest solution.
 
