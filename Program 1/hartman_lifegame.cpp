@@ -58,7 +58,7 @@ int main() {
     // do-while loop iterate, 1D game of life
     bool go = true; // controls do-while iteration
     int i = 0; // generation number
-
+    
     do {
         if (i == 0) // first generation runs this code only
         {

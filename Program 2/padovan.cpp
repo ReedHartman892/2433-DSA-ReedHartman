@@ -7,9 +7,12 @@
 #include <iostream> // console input/output
 #include <iomanip> // text formatting
 #include <fstream> // open input/output files
+#include <string> // strings
 using namespace std;
 
 // [Function prototypes]
+void debugOpenFiles(ifstream& infile, ofstream& outfile);
+
 void openFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: prompts which input/output files the program uses, doesn't close them.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
@@ -48,21 +51,18 @@ int main()
     // input/output file control
     ifstream infile;
     ofstream outfile;
-    openFiles(infile, outfile);
+    debugOpenFiles(infile, outfile);
     
-    // main program loop
-    //   execute padovan sequence on dedicated input file
-    //   output to both console and to dedicated output file
-    for (int n = 0; n <= 50; n++)
+    // main program loop, priming while !eof loop
+    while (!infile.eof())
     {
-        cout << padovanSequence(n) << ", ";
+        string line; // note that line is a string since getline() doesn't return integers.
+        getline(infile, line); // reads current line of the input file.
+        int num = stoi(line); // convert string from getline() to integer
+        // note: I thought about overloading getline, but this was the easiest solution.
+        // note: maybe I will put this into a function add an exception case if the stoi cannot convert to an integer.
+        cout << num << " " << padovanSequence(num) << " " << iterPadovanSequence(num) << endl;
     }
-    cout << endl;
-    for (int n = 0; n <= 50; n++)
-    {
-        cout << iterPadovanSequence(n) << ", ";
-    }
-    cout << endl << "sum: " << padovanSum(50) << endl;
     closeFiles(infile, outfile);
 
     return 0;
@@ -70,12 +70,19 @@ int main()
 
 // my functions!
 /* list of functions in this file:
-   1. openFiles
-   2. closeFiles
-   3. padovanSequence
-   4. iterPadovanSequence
-   5. padovanSum
+   1. debugOpenFiles
+   2. openFiles
+   3. closeFiles
+   4. padovanSequence
+   5. iterPadovanSequence
+   6. padovanSum
 */
+
+void debugOpenFiles (ifstream& infile, ofstream& outfile)
+{
+    infile.open("padovan.txt");
+    outfile.open("output.txt");
+}
 
 void openFiles (ifstream& infile, ofstream& outfile) // provided by instructor
 {
