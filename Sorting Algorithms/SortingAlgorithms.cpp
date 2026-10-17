@@ -50,6 +50,8 @@ void insertionSort(int nums[], int n)
     cout << "total comparisons: " << total_comparisons << endl;
 }
 
+// I got this algorithm from the web.
+// It doesn't use a separate findMin function, but rather has it built into its functionality.
 void selectionSort(int nums[], int n)
 {
     int current_iteration = 0;
@@ -57,12 +59,16 @@ void selectionSort(int nums[], int n)
     int total_comparisons = 0;
     
     for (int i = 0; i < n - 1; i++) {
-        int min_idx = i;
+        int min_idx = i; //
         for (int j = i + 1; j < n; j++) {
             if (nums[j] < nums[min_idx]) {
                 min_idx = j;
-                current_iteration_comparisons++;
             }
+            
+            printArray(nums, n);
+            cout << endl;
+
+            current_iteration_comparisons++;
         }
         if (min_idx != i) {
             swap(nums[i], nums[min_idx]);
