@@ -25,23 +25,28 @@ void closeFiles(ifstream& infile, ofstream& outfile);
    Returns: no return value
 */
 
-int padovanSequence(int n);
+long padovanSequence(int n);
 /* Purpose: recursively (with functions) calculates the n'th value in the padovan sequence.
    Recieves: integer n, the value of the n'th value in the padovan sequence.
    Returns: the n'th value in the padovan sequence, recursively.
 */
 
-int iterPadovanSequence(int n);
+long iterPadovanSequence(int n);
 /* Purpose: iteratively (with a loop) calculates the n'th value in the padovan sequence.
    Recieves: integer n, the value of the n'th value in the padovan sequence.
    Returns: the n'th value in the padovan sequence, iteratively.
 */
 
-int padovanSum(int n);
+long padovanSum(int n);
 /* Purpose: finds the sum of all integers leading up to and including the n'th value in the padovan sequence.
    Utilizes: the recusrive padovan sequence function, "int padovanSequence".
    Recieves: integer n, the value of the n'th value in the padovan sequence.
    Returns: the integer sum of all padovan numbers leading up the n'th number in the padovan sequence.
+*/
+
+/* Known problems
+   1. calculation time gets exponentially longer the higher the value of n is.
+   I don't know how to fix this because it's a big-boy programmer problem.
 */
 
 #define BASE 1; // base value of the padovan sequence
@@ -53,17 +58,30 @@ int main()
     ofstream outfile;
     debugOpenFiles(infile, outfile);
     
+    // console/outfile stuff
+    cout << setw(8) << left << "VALUE";
+    cout << setw(15) << left << "RECURSIVE";
+    cout << setw(15) << left << "ITERATIVE";
+    cout << "SUM" << endl;
+
+    outfile << setw(8) << left << "VALUE";
+    outfile << setw(15) << left << "RECURSIVE";
+    outfile << setw(15) << left << "ITERATIVE";
+    outfile << "SUM" << endl;
+    
     // main program loop, priming while !eof loop
     while (!infile.eof())
     {
         string line; // note that line is a string since getline() doesn't return integers.
         int num;
+        long sum = 0;
         getline(infile, line); // reads current line of the input file.
         // note: I thought about overloading getline to return integers instead of strings, however this was the easiest solution.
 
-        try // code to check if line can be converted (like if theres a letter somehow)
+        // code to check if line can be converted (like if theres a letter somehow)
+        try
         {
-            int num = stoi(line); // convert string returned from getline() to integer
+            num = stoi(line); // convert string returned from getline() to integer
             // self-note: stoi means "string to integer"
         }
         catch (const invalid_argument& e)
@@ -72,10 +90,21 @@ int main()
             abort();
         }
 
-        cout << num << " " << padovanSequence(num) << " " << iterPadovanSequence(num) << endl; // basically the answer right there, but still needs formatting
+        // output statements, console and outfile
+        cout << setw(8) << left << num;
+        cout << setw(15) << left << padovanSequence(num);
+        cout << setw(15) << left << iterPadovanSequence(num);
+        cout << padovanSum(num);
+        cout << endl;
+        
+        outfile << setw(8) << left << num;
+        outfile << setw(15) << left << padovanSequence(num);
+        outfile << setw(15) << left << iterPadovanSequence(num);
+        outfile << "sum: " << padovanSum(num);
+        outfile << endl;
+        
     }
-    closeFiles(infile, outfile);    
-
+    closeFiles(infile, outfile); // close files
     return 0;
 }
 
@@ -91,7 +120,7 @@ int main()
 
 void debugOpenFiles (ifstream& infile, ofstream& outfile)
 {
-    infile.open("padovan.txt");
+    infile.open("STRESSTEST.txt");
     outfile.open("output.txt");
 }
 
@@ -121,7 +150,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
     outfile << "files closed\n";
 }
 
-int padovanSequence(int n)
+long padovanSequence(int n)
 {
     if (n <= 2)
     {
@@ -131,14 +160,14 @@ int padovanSequence(int n)
     // P(n) = P(n-2) + P(n-3)
 }
 
-int iterPadovanSequence(int n)
+long iterPadovanSequence(int n)
 {
     if (n <= 2) // base cases
         return BASE;
 
     // hardcoded base cases
-    int p0 = 1, p1 = 1, p2 = 1;
-    int result = 0; // iterative output
+    long p0 = 1, p1 = 1, p2 = 1;
+    long result = 0; // iterative output
     
     // calculate padovan sequence iteratively
     for (int i = 3; i <= n; ++i)
@@ -151,9 +180,9 @@ int iterPadovanSequence(int n)
     return result;
 }
 
-int padovanSum(int n)
+long padovanSum(int n)
 {
-    int sum = 0;
+    long sum = 0;
     for (int a = 0; a <= n; a++)
     {
         sum += padovanSequence(a);
