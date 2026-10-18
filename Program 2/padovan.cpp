@@ -10,10 +10,7 @@
 #include <string> // strings
 using namespace std;
 
-// [Function prototypes]
-void debugOpenFiles(ifstream& infile, ofstream& outfile);
-// debug option for file opening, opens pre-selected files for quick and easy debugging.
-
+// Function prototypes
 void openFiles(ifstream& infile, ofstream& outfile);
 /* Purpose: prompts which input/output files the program uses, doesn't close them.
    Recieves: infile, input file at direct address; outfile, output file at direct address.
@@ -47,21 +44,23 @@ long padovanSum(int n);
 
 /* A known problem
    calculation time for the sum takes exponentially longer the higher the value of n is...
-   times two because outing to outfile means all calculations run twice.
-   I don't know how to improve this, because it's a big-boy programmer problem.
+   times two because outing to an outfile and a console means all calculations run twice.
+   The upper bound is around n = 70, past that point, computation takes too long.
+   I don't know how to improve this, because it's a big-boy programmer problem. It might be fun to solve in my off-time.
    Internet reccomended it exists within the explicit formula for the padovan sum, which can hypothetically calculate
    the sum of the padovan sequence with a single computation instead of calculating it iteratively.
-   But further sleuthing provided a very scary and highly-precise decimal calculation that I don't want to touch with a 50-foot pole.
+   But further sleuthing provided a very scary and precise-decimal calculation that I don't want to touch with a 50-foot pole.
 */
 
+// program definitions
 #define BASE 1; // base value of the padovan sequence
 
-int main()
+int main() // main program control
 {
     // input/output file control
     ifstream infile;
     ofstream outfile;
-    openFiles(infile, outfile);
+    openFiles(infile, outfile); // open files
     
     // console/outfile stuff
     outfile << "Reed Hartman" << "\n";
@@ -117,25 +116,18 @@ int main()
 
 // you are now at: THE FUNCTION
 /* list of functions in this file:
-   1. debugOpenFiles
-   2. openFiles
-   3. closeFiles
-   4. padovanSequence
-   5. iterPadovanSequence
-   6. padovanSum
+   1. openFiles
+   2. closeFiles
+   3. padovanSequence
+   4. iterPadovanSequence
+   5. padovanSum
 */
-
-void debugOpenFiles (ifstream& infile, ofstream& outfile)
-{
-    infile.open("STRESSTEST.txt");
-    outfile.open("output.txt");
-}
 
 void openFiles (ifstream& infile, ofstream& outfile) // provided by instructor
 {
     char inFileName[40];
     char outFileName[40];
-
+    
     cout << "Enter the input file name: ";
     cin >> inFileName;
     infile.open(inFileName); // open input file
@@ -159,7 +151,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
 
 long padovanSequence(int n)
 {
-    if (n <= 2)
+    if (n <= 2) // base cases
     {
         return BASE; // value of P(0), P(1), & P(3)
     }
@@ -170,10 +162,12 @@ long padovanSequence(int n)
 long iterPadovanSequence(int n)
 {
     if (n <= 2) // base cases
+    {
         return BASE;
+    }
 
     // hardcoded base cases
-    long p0 = 1, p1 = 1, p2 = 1;
+    long p0 = 1, p1 = 1, p2 = BASE;
     long result = 0; // iterative output
     
     // calculate padovan sequence iteratively
