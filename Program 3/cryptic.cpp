@@ -10,7 +10,8 @@
 #include <string>
 using namespace std;
 
-#define DEBUG false // optional debug mode, actives certain alternate things for debugging.
+#define DEBUG true // optional debug mode, actives certain alternate things for debugging.
+#define ENDCASE '#' //
 
 // [ FUNCTION PROTOTYPES - FILES]
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
@@ -29,13 +30,14 @@ void closeFiles(ifstream& infile, ofstream& outfile);
 */
 
 // [ FUNCTION PROTOTYPES - MISC. ]
-void frequencyCount(string sentence, short frequency[]);
+
+void frequencyCount(string, int[]);
 /* Purpose:
    Recieves: 
    Returns: 
 */
 
-void maxFrequency();
+int maxFrequency();
 /* Pupose:
    Recieves:
    Returns:
@@ -66,27 +68,40 @@ int main() {
     // open input/output files
     if (DEBUG) {debugOpenFiles(infile, outfile);}
     else {openFiles(infile, outfile);}
-    short letterFrequency[27] = {0};
 
+    int letterFrequency[27] = {0};
+    /* Array containing the frequency count (quantity) of alphabetical letters in a given sentence.
+       Index 0 is ignored.
+    */
+    
     string sentence;
-    getline(infile, sentence, '#');
-    frequencyCount(sentence, letterFrequency); // find frequency of letters in sentence
-
-    if (true) // (DEBUG) show frequency of letters
-    {
-        for (int x = 1; x < 27; x++) {
-            char temp_ch = 64 + x;
-            cout << temp_ch << letterFrequency[x] << ", ";
+    // do-while loop to read for all test cases. I do not know how to force it to stop repeating once more even when it has nothing left to read.
+    do {
+        getline(infile, sentence, ENDCASE); // read line in infile, output to sentence, delim is ENDCASE: '#'
+        frequencyCount(sentence, letterFrequency); // find frequency of letters in sentence
+        
+        if (true) // (DEBUG) show frequency of letters
+        {
+            for (int x = 1; x < 27; x++) {
+                char temp_ch = 64 + x;
+                cout << temp_ch << letterFrequency[x] << ", ";
+            }
+            cout << endl;
         }
-        cout << endl;
-    }
+
+        // reset list
+        for (int x = 1; x < 27; x++) {
+            letterFrequency[x] = 0;
+        }
+    } while(!infile.eof());
+
     closeFiles(infile, outfile); // close files
     return 0;
 }
 
 void debugOpenFiles (ifstream& infile, ofstream& outfile)
 {
-    infile.open("test.txt");
+    infile.open("CipherText.txt");
     outfile.open("output.txt");
 }
 
@@ -116,12 +131,12 @@ void closeFiles (ifstream& infile, ofstream& outfile)
     outfile << "files closed\n";
 }
 
-void frequencyCount(string sentence, short frequency[])
+void frequencyCount(string str, int frequency[])
 {
-    for (int i = 0; i < sentence.length(); i++) {
-        char ch = sentence[i]; // read letter at this line
+    for (int i = 0; i < str.length(); i++) {
+        char ch = str[i]; // read letter at this line
         cout << ch; // debug print
-        if (DEBUG) {cout << endl;}
+        if (false) {cout << endl;}
         // check letter frequency using ascii-equivalences
         for (int j = 0; j < 26; j++) {
             // ignore spaces
@@ -129,10 +144,9 @@ void frequencyCount(string sentence, short frequency[])
             char c_ch = j+65; // "compare ch"
             
             // this is going to make a fuckton of comparisons
-            if (DEBUG) {cout << "(" << ch << " == " << c_ch << ")\n";}
+            if (false) {cout << "(" << ch << " == " << c_ch << ")\n";}
             if (ch == c_ch)
             {
-                
                 frequency[j+1]++;
                 break;
             }
