@@ -11,4 +11,6 @@ my personal log for Program 3
      - For simplicity and for time, I'll just do a temporary alphabetically-sorted string that has the binary search ran repeatedly, popping the indexed value each time. Though that sounds complicated.
      - So for more simplicity I may just try a linear search first that searches the entire string for each type of character.
 
+     - It really wasn't that complicated, lol. Just had to read the instructions. Frequency count is probably the "hardest" part of the program conceptually, and I managed to get it done. It's also surprisingly fast.
+
 [ ] step 2: now do the cipher algorithm and its inverse

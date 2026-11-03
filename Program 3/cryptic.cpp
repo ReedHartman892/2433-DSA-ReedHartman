@@ -118,7 +118,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
 
 void frequencyCount(string sentence, short frequency[])
 {
-    for (int i = 0; i < sentence.length()-1; i++) {
+    for (int i = 0; i < sentence.length(); i++) {
         char ch = sentence[i]; // read letter at this line
         cout << ch; // debug print
         if (DEBUG) {cout << endl;}
@@ -127,10 +127,12 @@ void frequencyCount(string sentence, short frequency[])
             // ignore spaces
             if (ch == ' ') {break;}
             char c_ch = j+65; // "compare ch"
+            
+            // this is going to make a fuckton of comparisons
             if (DEBUG) {cout << "(" << ch << " == " << c_ch << ")\n";}
             if (ch == c_ch)
             {
-                // this is going to make a fuckton of comparisons
+                
                 frequency[j+1]++;
                 break;
             }
