@@ -1,4 +1,3 @@
-// libraries, input/output file reader/writer, console formating
 #include <iostream> // console input/output
 using namespace std;
 
@@ -17,7 +16,7 @@ int main() {
       }
       cout << "the letter is: " << enletter;
       if (lowercase)
-         cout << " (lowercased)";
+         cout << " (lowercase)";
       cout << endl;
    }
    return 0;

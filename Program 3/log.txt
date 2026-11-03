@@ -1,0 +1,14 @@
+my personal log for Program 3
+    I should not have started this late.
+
+[ ] step 1: algorithm to find the frequency of letters in a string
+     - this is needed for the cipher since it "shifts letters by the alphabetical position of the most frequently occuring letter"
+     - my first thought was to have a linear search algorithm run through the entire thing, however, that may take ages since you have to go through an entire string 26 time looking for each character.
+     - therefore it may be better to use a binary search of some kind, ran repeatedly to find all the letters in a string until it returns -1 (as in when it finds no more letters).
+     - Both options would require removing (or popping) letters from the temporary string after each iteration. However, the binary algorithm requires the list to be sorted first.
+     - I can just use an insertion sort algorithm to create a new temporary string that's sorted alphabetically. Characters can be compared via their ascii value. It may be smart to also check for lowercase letters even though the input files seemingly only contain uppercase letters.
+     - hypothetically, a modified combined binary search and linear search superalgorithm that checks the left and right endpoints provided by the binary search for if all internal letters equal the target value, all while counting how many letters are in that value. May not work, though, because you may not be able to know where you are.
+     - For simplicity and for time, I'll just do a temporary alphabetically-sorted string that has the binary search ran repeatedly, popping the indexed value each time. Though that sounds complicated.
+     - So for more simplicity I may just try a linear search first that searches the entire string for each type of character.
+
+[ ] step 2: now do the cipher algorithm and its inverse
