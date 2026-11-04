@@ -12,6 +12,7 @@ using namespace std;
 
 #define DEBUG true // optional debug mode, actives certain alternate things for debugging.
 #define ENDCASE '#' // endcase for getline operation
+#define E_POSITION_FREQUENCY 5 // defined position of E, the most frequent letter in the alphabet
 
 // [ FUNCTION PROTOTYPES - FILES]
 void debugOpenFiles(ifstream& infile, ofstream& outfile);
@@ -31,7 +32,7 @@ void closeFiles(ifstream& infile, ofstream& outfile);
 
 // [ FUNCTION PROTOTYPES - MISC. ]
 
-void frequencyCount(string, int[]);
+void frequencyCount(const string &str, int[]);
 /* Purpose: finds the frequency (really just the quantity) of each letter in a string.
    Recieves: a string and an array
    Returns: no return value.
@@ -43,13 +44,7 @@ int findIndexOfMax(int array[], int array_size);
    Returns: index of the maximum value in an array
 */
 
-int determineShift(int max);
-/* Pupose: determines the shift amount
-   Recieves: 
-   Returns: 
-*/
-
-string decrypt(string, int shift_amount);
+string decrypt(const string &str, int shift);
 /* Pupose: converts a ciphered text back to a sentence
    Recieves:
    Returns:
@@ -63,23 +58,20 @@ int main() {
     if (DEBUG) {debugOpenFiles(infile, outfile);}
     else {openFiles(infile, outfile);}
     
-    int letterFrequency[26] = {0};
+    int letterFrequency[27] = {0};
     /* Array containing the frequency count (quantity) of alphabetical letters in a given sentence.
        Index 0 is ignored.
     */
     string sentence;
     /* stores the sentence */
 
-    // do-while loop to read for all test cases.
-    while(!infile.eof())
+    // getline-loop to read for all test cases.
+    while(getline(infile, sentence, ENDCASE)) // read line in infile, output to sentence, delim is ENDCASE: '#'
     {
         // TODO: add a thing for the number of test cases
-        getline(infile, sentence, ENDCASE); // read line in infile, output to sentence, delim is ENDCASE: '#'
         
-        if (infile.eof()) {break;} // force-out to stop the program from doing an extra iteration, idk how to do it any other way.
-
         frequencyCount(sentence, letterFrequency); // STEP 1: find frequency of letters in sentence
-        if (DEBUG) // (DEBUG) show frequency of letters
+        if (DEBUG) // show frequency of letters
         {
             for (int x = 1; x < 27; x++) {
                 char temp_ch = 64 + x;
@@ -88,13 +80,15 @@ int main() {
             cout << endl;
         }
         
-        int max_i = findIndexOfMax(letterFrequency, sizeof(letterFrequency)/sizeof(letterFrequency[0])); // STEP 2: find maximum of frequency
-        if (DEBUG) {
+        int max_i = findIndexOfMax(letterFrequency, sizeof(letterFrequency)/sizeof(letterFrequency[0])); // STEP 2: find maximum of frequency, this is also the shift amount
+        if (DEBUG) // show data concerning maximum frequency
+        {
             cout << "index of most frequent letter: " << max_i << endl;
             cout << "most frequent letter: " << (char)(64 + max_i) << ", with " << letterFrequency[max_i] << " cases." << endl;
         }
-        //int shift_amount = determineShift(index_of_max); // STEP 3: determine cipher shift amount
-        //string plain_text = decrypt(sentence, shift_amount); // STEP 4: convert sentence back to plaintext
+        int shift_amt = max_i - E_POSITION_FREQUENCY;
+        string plain_text = decrypt(sentence, shift_amt); // STEP 3: convert sentence back to plaintext
+        cout << endl << plain_text << endl; // output decrypted text
         
         // STEP 5: ask the user if the decryption was correct or not
         string answer;
@@ -142,7 +136,7 @@ void closeFiles (ifstream& infile, ofstream& outfile)
     outfile << "files closed\n";
 }
 
-void frequencyCount(string str, int frequency[])
+void frequencyCount(const string &str, int frequency[])
 {
     for (int i = 0; i < str.length(); i++) {
         char ch = str[i]; // read letter at this line
@@ -171,7 +165,7 @@ int findIndexOfMax(int array[], int array_size) // non-standard findMax algorith
 {
     //cout << "array_size " << array_size << endl;
     int index_of_max = 1;
-    int max = 1;
+    int max = array[1];
     for (int i = 1; i < array_size-1; ++i){
         if (max < array[i]) {
             max = array[i];
@@ -179,4 +173,20 @@ int findIndexOfMax(int array[], int array_size) // non-standard findMax algorith
         }
     }
     return index_of_max;
+}
+
+string decrypt(const string &text, int shift)
+{
+    string decrypted_str = ""; // temporary string for containing the decrypted algorithm
+    for (char c : text) // string-based loop
+    {
+        // decrpytion algorithm
+        if (isalpha(c)) {
+            decrypted_str += char(((c - 65 - shift + 26) % 26) + 65); // decryption
+        }
+        else {
+            decrypted_str += c; // default case
+        }
+    }
+    return decrypted_str;
 }
