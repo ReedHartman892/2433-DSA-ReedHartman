@@ -55,14 +55,10 @@ int main() {
     ifstream infile;
     ofstream outfile;
     // open input/output files
-    if (true) {debugOpenFiles(infile, outfile);}
+    if (DEBUG) {debugOpenFiles(infile, outfile);}
     else {openFiles(infile, outfile);}
     
-    int letterFrequency[27] = {0};
-    /* Array containing the frequency count (quantity) of alphabetical letters in a given sentence.
-       Aggregately initialized.
-       Index 0 is ignored.
-    */
+    int letterFrequency[27] = {0}; // Array containing the frequency count (quantity) of alphabetical letters in a given sentence. Index 0 is ignored.
     string sentence; // stores the sentence
     int testCase = 1; // stores the testcase value
 
@@ -107,9 +103,9 @@ int main() {
         // STEP 4: convert sentence back to plaintext
         string plain_text = decrypt(sentence, shift_amt);
 
-        cout << "Decrypted PlainText:" << endl;
+        cout << endl << "Decrypted PlainText:" << endl;
         cout << plain_text << endl; // output decrypted text
-        outfile << "Decrypted PlainText:" << endl;
+        outfile << endl << "Decrypted PlainText:" << endl;
         outfile << plain_text << endl;
         
         // STEP 5: ask the user if the decryption was correct or not
