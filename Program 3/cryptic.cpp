@@ -66,11 +66,17 @@ int main() {
     string sentence; // stores the sentence
     int testCase = 1; // stores the testcase value
 
+    // title output to outfile
+    outfile << "Reed Hartman" << endl;
+    outfile << "Program 3 Decryption" << endl << endl;
+
     // getline-loop to read for all test cases.
     while(getline(infile, sentence, ENDCASE)) // read line in infile, output to sentence, delim is ENDCASE: '#'
     {
-        cout << "Test Case " << testCase << " Encrypted Text:" << endl;
+        cout << "Test Case " << testCase << " Cipher Text:" << endl;
         cout << sentence << endl; // print the encrypted sentence
+        outfile << "Test Case " << testCase << " Cipher Text:" << endl;
+        outfile << sentence << endl;
         
         // STEP 1: find frequency of letters in sentence
         frequencyCount(sentence, letterFrequency);
@@ -103,17 +109,27 @@ int main() {
 
         cout << "Decrypted PlainText:" << endl;
         cout << plain_text << endl; // output decrypted text
+        outfile << "Decrypted PlainText:" << endl;
+        outfile << plain_text << endl;
         
         // STEP 5: ask the user if the decryption was correct or not
         string answer;
         cout << "does the previous decrypted text look correct? (does it give a legible output?) (y/n) ";
         cin >> answer;
         cout << endl;
+        outfile << endl;
 
         // prompt user
-        if (answer == "y"){cout << "The decryption method worked.";}
-        else {cout << "The decryption method failed.";}
+        if (answer == "y"){
+            cout << "The decryption method worked.";
+            outfile << "The decryption method worked.";
+        }
+        else {
+            cout << "The decryption method failed.";
+            outfile << "The decryption method failed.";
+        }
         cout << endl << endl << endl;
+        outfile << endl << endl << endl;
 
         // STEP 6: reset frequency and increment testCase number list for next test case in the input file
         for (int x = 1; x < 27; x++) {letterFrequency[x] = 0;}
